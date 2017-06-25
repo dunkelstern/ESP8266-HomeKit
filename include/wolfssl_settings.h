@@ -1,4 +1,3 @@
-//#define WOLFSSL_MISC_INCLUDED
 #define FREERTOS
 #define WOLFSSL_LWIP
 #define NO_WOLFSSL_MEMORY

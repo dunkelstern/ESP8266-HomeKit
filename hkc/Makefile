@@ -12,11 +12,10 @@
 #     a generated lib/image xxx.a ()
 #
 ifndef PDIR
-UP_EXTRACT_DIR = ..
 GEN_LIBS = libhkc.a
-COMPONENTS_libhkc = wolfcrypt/libwolfcrypt.a
 endif
 
+CCFLAGS = -std=c99
 
 #############################################################
 # Configuration i.e. compile options etc.
@@ -40,9 +39,10 @@ endif
 #
 
 INCLUDES := $(INCLUDES) -I $(PDIR)include
+INCLUDES += -I $(PDIR)../server/
+INCLUDES += -I $(PDIR)../wolfcrypt/src/
 INCLUDES += -I ./
 INCLUDES += -I $(SDK_PATH)/include/freertos
-#INCLUDES += -I $(SDK_PATH)/include/hkc
 PDIR := ../$(PDIR)
 sinclude $(PDIR)Makefile
 

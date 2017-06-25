@@ -34,7 +34,7 @@ void    hkc_init(char *accname);
  * Parameters   : the accessory name
  * Returns      : nothing
 *******************************************************************************/
-void    hkc_user_init(char *accname);
+void hkc_user_init(char *accname);
 
 /******************************************************************************
  * FunctionName : change_value
@@ -93,7 +93,7 @@ cJSON   *addService(cJSON *sers, int iid, char *brand, int sType);
  *                mode  -- 0=init, 1=change, 2=refresh
  * Returns      : nothing
 *******************************************************************************/
-typedef void (* acc_cb)(int aid, int iid, cJSON *value, int mode);
+typedef void (*acc_cb)(int aid, int iid, cJSON *value, int mode);
 
 /******************************************************************************
  * FunctionName : addCharacteristic

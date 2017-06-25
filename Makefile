@@ -11,69 +11,14 @@
 #     subdir/lib to be extracted and rolled up into
 #     a generated lib/image xxx.a ()
 #
-TARGET = eagle
-#FLAVOR = release
-FLAVOR = debug
-
-#EXTRA_CCFLAGS += -u
-
-ifndef PDIR # {
-GEN_IMAGES= eagle.app.v6.out
-GEN_BINS= eagle.app.v6.bin
-SPECIAL_MKTARGETS=$(APP_MKTARGETS)
-SUBDIRS=    \
-	user
-
-endif # } PDIR
-
-LDDIR = $(SDK_PATH)/ld
-
-CCFLAGS += -Os
-
-TARGET_LDFLAGS =		\
-	-nostdlib		\
-	-Wl,-EL \
-	--longcalls \
-	--text-section-literals
-
-ifeq ($(FLAVOR),debug)
-    TARGET_LDFLAGS += -g -O2
+ifndef PDIR
+UP_EXTRACT_DIR = ..
+GEN_LIBS = libhkc.a
+COMPONENTS_libhkc = \
+	wolfcrypt/libwolfcrypt.a \
+	server/libserver.a \
+	hkc/libhkc.a
 endif
-
-ifeq ($(FLAVOR),release)
-    TARGET_LDFLAGS += -g -O0
-endif
-
-COMPONENTS_eagle.app.v6 = \
-	user/libuser.a	\
-	spiffs/libspiffs.a \
-	driver/libdriver.a
-
-LINKFLAGS_eagle.app.v6 = \
-	-L$(SDK_PATH)/lib        \
-	-Wl,--gc-sections   \
-	-nostdlib	\
-    -T$(LD_FILE)   \
-	-Wl,--no-check-sections	\
-    -u call_user_start	\
-	-Wl,-static						\
-	-Wl,--start-group					\
-	-lcirom \
-	-lgcc					\
-	-lhal					\
-	-lphy	\
-	-lpp	\
-	-lnet80211	\
-	-lwpa	\
-	-lmain	\
-	-lfreertos	\
-	-llwip	\
-	$(DEP_LIBS_eagle.app.v6)					\
-	-Wl,--end-group
-
-DEPENDS_eagle.app.v6 = \
-                $(LD_FILE) \
-                $(LDDIR)/eagle.rom.addr.v6.ld
 
 #############################################################
 # Configuration i.e. compile options etc.
@@ -82,24 +27,8 @@ DEPENDS_eagle.app.v6 = \
 #   makefile at its root level - these are then overridden
 #   for a subtree within the makefile rooted therein
 #
-
-#UNIVERSAL_TARGET_DEFINES =		\
-
-# Other potential configuration flags include:
-#	-DTXRX_TXBUF_DEBUG
-#	-DTXRX_RXBUF_DEBUG
-#	-DWLAN_CONFIG_CCX
-CONFIGURATION_DEFINES = -DMEMLEAK_DEBUG
-
-DEFINES +=				\
-	$(UNIVERSAL_TARGET_DEFINES)	\
-	$(CONFIGURATION_DEFINES)
-
-DDEFINES +=				\
-	$(UNIVERSAL_TARGET_DEFINES)	\
-	$(CONFIGURATION_DEFINES)
-
-
+#DEFINES +=
+ 
 #############################################################
 # Recursion Magic - Don't touch this!!
 #

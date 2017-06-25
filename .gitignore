@@ -1,8 +1,6 @@
-
 *.out
-
 *.a
-
 *.d
-
 *.o
+.output/*
+**/.output
